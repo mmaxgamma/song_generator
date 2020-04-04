@@ -1,1 +1,15 @@
 import winsound
+
+winsound.PlaySound("C:/Users/aferg/OneDrive/Desktop/Clipped WAV files/pianolowc", winsound.SND_FILENAME)
+winsound.PlaySound("C:/Users/aferg/OneDrive/Desktop/Clipped WAV files/pianoc#", winsound.SND_FILENAME)
+winsound.PlaySound("C:/Users/aferg/OneDrive/Desktop/Clipped WAV files/pianod", winsound.SND_FILENAME)
+winsound.PlaySound("C:/Users/aferg/OneDrive/Desktop/Clipped WAV files/pianod#", winsound.SND_FILENAME)
+winsound.PlaySound("C:/Users/aferg/OneDrive/Desktop/Clipped WAV files/pianoe", winsound.SND_FILENAME)
+winsound.PlaySound("C:/Users/aferg/OneDrive/Desktop/Clipped WAV files/pianof", winsound.SND_FILENAME)
+winsound.PlaySound("C:/Users/aferg/OneDrive/Desktop/Clipped WAV files/pianof#", winsound.SND_FILENAME)
+winsound.PlaySound("C:/Users/aferg/OneDrive/Desktop/Clipped WAV files/pianog", winsound.SND_FILENAME)
+winsound.PlaySound("C:/Users/aferg/OneDrive/Desktop/Clipped WAV files/pianog#", winsound.SND_FILENAME)
+winsound.PlaySound("C:/Users/aferg/OneDrive/Desktop/Clipped WAV files/pianoa", winsound.SND_FILENAME)
+winsound.PlaySound("C:/Users/aferg/OneDrive/Desktop/Clipped WAV files/pianoa#", winsound.SND_FILENAME)
+winsound.PlaySound("C:/Users/aferg/OneDrive/Desktop/Clipped WAV files/pianob", winsound.SND_FILENAME)
+winsound.PlaySound("C:/Users/aferg/OneDrive/Desktop/Clipped WAV files/pianohighc", winsound.SND_FILENAME)
