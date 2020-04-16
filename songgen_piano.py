@@ -2,44 +2,111 @@ import winsound
 import random
 import time
 
-def lowc():
-    winsound.PlaySound("pianolowc", winsound.SND_ASYNC)
-def csharp():
-    winsound.PlaySound("pianoc#", winsound.SND_ASYNC)
-def d():
-    winsound.PlaySound("pianod", winsound.SND_ASYNC)
-def dsharp():
-    winsound.PlaySound("pianod#", winsound.SND_ASYNC)
-def e():
-    winsound.PlaySound("pianoe", winsound.SND_ASYNC)
-def f():
-    winsound.PlaySound("pianof", winsound.SND_ASYNC)
-def fsharp():
-    winsound.PlaySound("pianof#", winsound.SND_ASYNC)
-def g():
-    winsound.PlaySound("pianog", winsound.SND_ASYNC)
-def gsharp():
-    winsound.PlaySound("pianog#", winsound.SND_ASYNC)
-def a():
-    winsound.PlaySound("pianoa", winsound.SND_ASYNC)
-def asharp():
-    winsound.PlaySound("pianoa#", winsound.SND_ASYNC)
-def b():
-    winsound.PlaySound("pianob", winsound.SND_ASYNC)
-def highc():
-    winsound.PlaySound("pianohighc", winsound.SND_ASYNC)
 
+class PianoSong:
+    
+    def __init__(self):
+        self.songinmilli = 0
+        self.key = 'self.'
+        
+        #MAJOR KEYS
+        self.chromatic = [PianoSong.c5, PianoSong.c5sharp, PianoSong.d5, PianoSong.d5sharp, PianoSong.e5, PianoSong.f5, PianoSong.f5sharp, PianoSong.g5, PianoSong.g5sharp, PianoSong.a5, PianoSong.a5sharp, PianoSong.b5, PianoSong.c6]
+        self.cmajor = [PianoSong.c5, PianoSong.d5, PianoSong.e5, PianoSong.f5, PianoSong.g5, PianoSong.a5, PianoSong.b5, PianoSong.c6]
+        self.dmajor = [PianoSong.d5, PianoSong.e5, PianoSong.f5sharp, PianoSong.g5, PianoSong.a5, PianoSong.b5, PianoSong.c5sharp]
+        self.emajor = [PianoSong.e5, PianoSong.f5sharp, PianoSong.g5sharp, PianoSong.a5, PianoSong.b5, PianoSong.c5sharp, PianoSong.d5sharp]
+        self.fmajor = [PianoSong.f5, PianoSong.g5, PianoSong.a5, PianoSong.a5sharp, PianoSong.c5, PianoSong.d5, PianoSong.e5, PianoSong.f5]
+        self.gmajor = [PianoSong.g5, PianoSong.a5, PianoSong.b5, PianoSong.c5, PianoSong.d5, PianoSong.e5, PianoSong.f5sharp]
+        self.amajor = [PianoSong.a5, PianoSong.b5, PianoSong.c5sharp, PianoSong.d5, PianoSong.e5, PianoSong.f5sharp, PianoSong.g5sharp]
+        self.bmajor = [PianoSong.b5, PianoSong.c5sharp, PianoSong.d5sharp, PianoSong.e5, PianoSong.f5sharp, PianoSong.g5sharp, PianoSong.a5sharp]
+        self.csharpmajor = [PianoSong.c5sharp, PianoSong.d5sharp, PianoSong.f5, PianoSong.f5sharp, PianoSong.g5sharp, PianoSong.a5sharp, PianoSong.c5]
+        self.dsharpmajor = [PianoSong.d5sharp, PianoSong.f5, PianoSong.g5, PianoSong.g5sharp, PianoSong.a5sharp, PianoSong.c5, PianoSong.d5]
+        self.fsharpmajor = [PianoSong.f5sharp, PianoSong.g5sharp, PianoSong.a5sharp, PianoSong.b5, PianoSong.c5sharp, PianoSong.d5sharp, PianoSong.f5]
+        self.gsharpmajor = [PianoSong.g5sharp, PianoSong.a5sharp, PianoSong.c5, PianoSong.c5sharp, PianoSong.d5sharp, PianoSong.f5, PianoSong.g5]
+        self.asharpmajor = [PianoSong.a5sharp, PianoSong.c5, PianoSong.d5, PianoSong.d5sharp, PianoSong.f5, PianoSong.g5, PianoSong.a5]    
+        
+        #MINOR KEYS
+        self.cminor = [PianoSong.c5, PianoSong.d5, PianoSong.d5sharp, PianoSong.f5, PianoSong.g5, PianoSong.g5sharp, PianoSong.a5sharp, PianoSong.c6]
+        self.dminor = [PianoSong.d5, PianoSong.e5, PianoSong.f5, PianoSong.g5, PianoSong.a5, PianoSong.a5sharp, PianoSong.c5]
+        self.eminor = [PianoSong.e5, PianoSong.f5sharp, PianoSong.g5, PianoSong.a5, PianoSong.b5, PianoSong.c5, PianoSong.d5]
+        self.fminor = [PianoSong.f5, PianoSong.g5, PianoSong.g5sharp, PianoSong.a5sharp, PianoSong.c5, PianoSong.c5sharp, PianoSong.d5sharp]
+        self.gminor = [PianoSong.g5, PianoSong.a5, PianoSong.a5sharp, PianoSong.c5, PianoSong.d5, PianoSong.d5sharp, PianoSong.f5]
+        self.aminor = [PianoSong.a5, PianoSong.b5, PianoSong.c5, PianoSong.d5, PianoSong.e5, PianoSong.f5, PianoSong.g5]
+        self.bminor = [PianoSong.b5, PianoSong.c5sharp, PianoSong.d5, PianoSong.e5, PianoSong.f5sharp, PianoSong.g5, PianoSong.a5]
+        self.csharpminor = [PianoSong.c5sharp, PianoSong.d5sharp, PianoSong.e5, PianoSong.f5sharp, PianoSong.g5sharp, PianoSong.a5, PianoSong.b5]
+        self.dsharpminor = [PianoSong.d5sharp, PianoSong.f5, PianoSong.f5sharp, PianoSong.g5sharp, PianoSong.a5sharp, PianoSong.b5, PianoSong.c5sharp]
+        self.fsharpminor = [PianoSong.f5sharp, PianoSong.g5sharp, PianoSong.a5, PianoSong.b5, PianoSong.c5sharp, PianoSong.d5, PianoSong.e5]
+        self.gsharpminor = [PianoSong.g5sharp, PianoSong.a5sharp, PianoSong.b5, PianoSong.c5sharp, PianoSong.d5sharp, PianoSong.e5, PianoSong.f5sharp]
+        self.asharpminor = [PianoSong.a5sharp, PianoSong.c5, PianoSong.c5sharp, PianoSong.d5sharp, PianoSong.f5, PianoSong.f5sharp, PianoSong.g5sharp]
+        
+
+    def c5(self):
+        winsound.PlaySound("pianolowc", winsound.SND_ASYNC)
+    def c5sharp(self):
+        winsound.PlaySound("pianoc#", winsound.SND_ASYNC)
+    def d5(self):
+        winsound.PlaySound("pianod", winsound.SND_ASYNC)
+    def d5sharp(self):
+        winsound.PlaySound("pianod#", winsound.SND_ASYNC)
+    def e5(self):
+        winsound.PlaySound("pianoe", winsound.SND_ASYNC)
+    def f5(self):
+        winsound.PlaySound("pianof", winsound.SND_ASYNC)
+    def f5sharp(self):
+        winsound.PlaySound("pianof#", winsound.SND_ASYNC)
+    def g5(self):
+        winsound.PlaySound("pianog", winsound.SND_ASYNC)
+    def g5sharp(self):
+        winsound.PlaySound("pianog#", winsound.SND_ASYNC)
+    def a5(self):
+        winsound.PlaySound("pianoa", winsound.SND_ASYNC)
+    def a5sharp(self):
+        winsound.PlaySound("pianoa#", winsound.SND_ASYNC)
+    def b5(self):
+        winsound.PlaySound("pianob", winsound.SND_ASYNC)
+    def c6(self):
+        winsound.PlaySound("pianohighc", winsound.SND_ASYNC)
+
+
+    def define_song(self):
+        
+        lengthsatisfy = False
+        while lengthsatisfy == False:
+            try:
+                songlength = int(input("How long in seconds do you want your song to be?\n"))
+                if songlength > 0:
+                    lengthsatisfy = True
+                else:
+                    raise Exception
+            except:
+                print("Invalid song length")
+
+        self.songinmilli = songlength * 1000
+        
+        
+        keysatisfy = False
+        while keysatisfy == False:
+            inputkey = input("Enter a Key, i.e. 'asharpminor'\n")
+            if inputkey.lower() in ['cmajor', 'dmajor', 'emajor', 'fmajor', 'gmajor', 'amajor', 'bmajor', 'csharpmajor', 'dsharpmajor', 'fsharpmajor', 'gsharpmajor', 'asharpmajor', 'cminor', 'dminor', 'eminor', 'fminor', 'gminor', 'aminor', 'bminor', 'csharpminor', 'dsharpminor', 'fsharpminor', 'gsharpminor', 'asharpminor']:
+                keysatisfy = True
+                self.key += inputkey
+            else: 
+                print("Invalid Key")
+        
+        
+    def play_song(self):
+        elapsed = 0
+        self.key = eval(self.key)
+        while elapsed < self.songinmilli:
+            random.choice(self.key)(mysong)
+            time.sleep(2)
+            elapsed += 2000
+        
+        
+        
 if __name__ == "__main__":
-    chromatic = [lowc, csharp, d, dsharp, e, f, fsharp, g, gsharp, a, asharp, b, highc]
-    cmajor = [lowc, d, e, f, g, a, b, highc]
-    dmajor = [d, e, fsharp, g, a, b, csharp]
-    emajor = [e, fsharp, gsharp, a, b, csharp, dsharp]
-    fmajor = [f, g, a, asharp, lowc, d, e, f]
-    gmajor = [g, a, b, lowc, d, e, fsharp]
-    amajor = [a, b, csharp, d, e, fsharp, gsharp]
-    bmajor = [b, csharp, dsharp, e, fsharp, gsharp, asharp]
-    iterator = 10
-    while iterator >= 0:
-        random.choice(fmajor)()
-        time.sleep(2)
-        iterator = iterator - 1
+    
+    mysong = PianoSong()
+    
+    mysong.define_song()
+
+    mysong.play_song()
