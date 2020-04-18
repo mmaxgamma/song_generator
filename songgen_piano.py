@@ -47,6 +47,16 @@ class PianoSong:
         #SONG NAME
         
         self.songname = 'yoursong'
+        
+        
+        #FILE NAME IF APPLICABLE
+        self.filename = ''
+        
+        
+        #FILE INPUT PARAMETERS IF APPLICABLE
+        self.file_songinmilli = 0
+        self.file_key = 'self.'
+        self.file_songname = 'yoursong'
 
     def c5(self):
         winsound.PlaySound("pianolowc", winsound.SND_ASYNC)
@@ -89,7 +99,7 @@ class PianoSong:
         return "pianohighc.wav"
 
 
-    def define_song(self):
+    def define_song_inputs(self):
         
         lengthsatisfy = False
         while lengthsatisfy == False:
@@ -118,7 +128,7 @@ class PianoSong:
         self.songname = input("Give your song a name!\n")
         
         
-    def play_song(self):
+    def play_song_inputs(self):
         elapsed = 0
         self.key = eval(self.key)
         while elapsed < self.songinmilli:
@@ -128,7 +138,7 @@ class PianoSong:
             elapsed += 2000
             
             
-    def compile_song(self):
+    def compile_song_inputs(self):
         
 
         with winreg.OpenKey(winreg.HKEY_CURRENT_USER, r'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders') as key:
@@ -143,6 +153,51 @@ class PianoSong:
             if not wav_out.getnframes():
                 wav_out.setparams(wav_in.getparams())
             wav_out.writeframes(wav_in.readframes(wav_in.getnframes()))
+            
+            
+    def define_song_file(self):
+        strippedlines = []
+        fh = open(self.filename)
+        lines = fh.readlines()
+        for line in lines:
+            strippedline = line.strip()
+            strippedlines.append(strippedline)
+        fh.close()
+        
+        self.file_songinmilli = int(strippedlines[0].split('-')[1]) * 1000
+        self.file_key += strippedlines[1].split('-')[1]
+        self.file_songname = strippedlines[2].split('-')[1]
+        
+    
+    def play_song_file(self):
+        elapsed = 0
+        self.file_key = eval(self.file_key)
+        while elapsed < self.file_songinmilli:
+            choice = random.choice(self.file_key)(mysong)
+            self.wavfiles.append(choice)
+            time.sleep(2)
+            elapsed += 2000
+        
+    
+    
+    def compile_song_file(self):
+        
+
+        with winreg.OpenKey(winreg.HKEY_CURRENT_USER, r'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders') as key:
+            Downloads = winreg.QueryValueEx(key, '{374DE290-123F-4565-9164-39C4925E467B}')[0]
+        
+        infiles = self.wavfiles
+        outfile = f"{Downloads}/{self.file_songname}.wav"
+        
+        wav_out = wave.open(outfile, 'wb')
+        for wav_path in infiles:
+            wav_in = wave.open(wav_path, 'rb')
+            if not wav_out.getnframes():
+                wav_out.setparams(wav_in.getparams())
+            wav_out.writeframes(wav_in.readframes(wav_in.getnframes()))       
+
+        
+            
 
         
 
@@ -152,18 +207,57 @@ class PianoSong:
         
 if __name__ == "__main__":
     
-    mysong = PianoSong()
-    
-    mysong.define_song()
-
-    mysong.play_song()
-    
-    answersatisfy = False
-    
-    while answersatisfy == False:
-        answer = input("Would you like to download your song? Enter y or n.\n")
-        if answer.lower() in ['y', 'n']:
-            answersatisfy = True
+    paramsatisfy = False
+    while paramsatisfy == False:
+        parammethod = input("How would you like to create your song? Input a file or answer a series of inputs? Enter 'file' or 'inputs'\n")
+        if parammethod.lower() in ['file', 'inputs']:
+            paramsatisfy = True
+        else:
+            print("Invalid Parameter Method. Enter 'file' or 'inputs'")
             
-    if answer.lower() == 'y':
-        mysong.compile_song()
+            
+    if parammethod.lower() == 'inputs':
+        
+
+    
+    
+        mysong = PianoSong()
+
+
+    
+        mysong.define_song_inputs()
+
+        mysong.play_song_inputs()
+    
+        answersatisfy = False
+    
+        while answersatisfy == False:
+            answer = input("Would you like to download your song? Enter y or n.\n")
+            if answer.lower() in ['y', 'n']:
+                answersatisfy = True
+            
+        if answer.lower() == 'y':
+            mysong.compile_song_inputs()
+            
+            
+    elif parammethod.lower() == 'file':
+        
+        mysong = PianoSong()
+        
+        mysong.filename = input("Enter a txt file to be read.\n")
+    
+        mysong.define_song_file()
+
+        mysong.play_song_file()
+    
+        answersatisfy = False
+    
+        while answersatisfy == False:
+            answer = input("Would you like to download your song? Enter y or n.\n")
+            if answer.lower() in ['y', 'n']:
+                answersatisfy = True
+            
+        if answer.lower() == 'y':
+            mysong.compile_song_file()
+        
+        
