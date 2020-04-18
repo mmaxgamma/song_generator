@@ -2,6 +2,7 @@ import winsound
 import random
 import time
 import wave
+import winreg
 
 
 class PianoSong:
@@ -129,15 +130,19 @@ class PianoSong:
             
     def compile_song(self):
         
-        infiles = self.wavfiles
-        outfile = f"compiledsongs/{self.songname}.wav"
+
+        with winreg.OpenKey(winreg.HKEY_CURRENT_USER, 'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders') as key:
+            Downloads = winreg.QueryValueEx(key, '{374DE290-123F-4565-9164-39C4925E467B}')[0]
         
-        with wave.open(outfile, 'wb') as wav_out:
-            for wav_path in infiles:
-                with wave.open(wav_path, 'rb') as wav_in:
-                    if not wav_out.getnframes():
-                        wav_out.setparams(wav_in.getparams())                              #this line shows an error for some reason but it works anyway
-                    wav_out.writeframes(wav_in.readframes(wav_in.getnframes()))            #this line too
+        infiles = self.wavfiles
+        outfile = f"{Downloads}/{self.songname}.wav"
+        
+        wav_out = wave.open(outfile, 'wb')
+        for wav_path in infiles:
+            wav_in = wave.open(wav_path, 'rb')
+            if not wav_out.getnframes():
+                wav_out.setparams(wav_in.getparams())
+            wav_out.writeframes(wav_in.readframes(wav_in.getnframes()))
 
         
 
@@ -156,7 +161,7 @@ if __name__ == "__main__":
     answersatisfy = False
     
     while answersatisfy == False:
-        answer = input("Would you like to download your song?\n")
+        answer = input("Would you like to download your song? Enter y or n.\n")
         if answer.lower() in ['y', 'n']:
             answersatisfy = True
             
