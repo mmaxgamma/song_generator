@@ -5,9 +5,22 @@ import math
 class SineWaveSong:
     
     def __init__(self):
+        
+        #SONG PARAMETERS
         self.songinmilli = 0
         self.key = 'self.'
         self.BPM = 0
+        
+        #SONG PARAMETERS FOR FILE (IF APPLICABLE)
+        
+        self.file_songinmilli = 0
+        self.file_key = 'self.'
+        self.file_BPM = 0
+        
+        #FILE NAME IF APPLICABLE
+        self.filename = ''
+        
+        #NOTES
         self.c5 = 523
         self.c5sharp = 554
         self.d5 = 587
@@ -54,14 +67,13 @@ class SineWaveSong:
 
 
         #NOTELENGTHS
-
         self.notelengths = ['eighth', 'quarter', 'half', 'whole']
 
 
 
 
 
-    def define_song(self):
+    def define_song_inputs(self):
 
         lengthsatisfy = False
         while lengthsatisfy == False:
@@ -97,7 +109,7 @@ class SineWaveSong:
                 print("Invalid Key")
 
 
-    def play_song(self):
+    def play_song_inputs(self):
         elapsed = 0
 
         while elapsed < self.songinmilli:
@@ -116,13 +128,72 @@ class SineWaveSong:
             winsound.Beep(note, length)
             elapsed = elapsed + length
             
+    
+    def define_song_file(self):
+        strippedlines = []
+        fh = open(self.filename)
+        lines = fh.readlines()
+        for line in lines:
+            strippedline = line.strip()
+            strippedlines.append(strippedline)
+        fh.close()
+        
+        self.file_songinmilli = int(strippedlines[0].split('-')[1]) * 1000
+        self.file_key += strippedlines[1].split('-')[1]
+        self.file_BPM = strippedlines[2].split('-')[1]
+        
+        
+    def play_song_file(self):
+        
+        elapsed = 0
+
+        while elapsed < self.file_songinmilli:
+            note = random.choice(eval(self.file_key))
+            notelength = random.choice(self.notelengths)
+            
+            if notelength == 'eighth':
+                length = math.ceil(250 * (60/int(self.file_BPM)))
+            if notelength == 'quarter':
+                length = math.ceil(500 * (60/int(self.file_BPM)))
+            if notelength == 'half':
+                length = math.ceil(1000 * (60/int(self.file_BPM)))
+            if notelength == 'whole':
+                length = math.ceil(2000 * (60/int(self.file_BPM)))
+                
+            winsound.Beep(note, length)
+            elapsed = elapsed + length
+            
             
             
 if __name__ == "__main__":
     
-    mySineWaveSong = SineWaveSong()
+    paramsatisfy = False
+    while paramsatisfy == False:
+        parammethod = input("How would you like to create your song? Input a file or answer a series of inputs? Enter 'file' or 'inputs'\n")
+        if parammethod.lower() in ['file', 'inputs']:
+            paramsatisfy = True
+        else:
+            print("Invalid Parameter Method. Enter 'file' or 'inputs'")
+            
+    if parammethod.lower() == 'inputs':
+        mySineWaveSong = SineWaveSong()
     
-    mySineWaveSong.define_song()
+        mySineWaveSong.define_song_inputs()
     
-    mySineWaveSong.play_song()
+        mySineWaveSong.play_song_inputs()
+        
+    
+    
+    
+    elif parammethod.lower() == 'file':
+        
+        mySineWaveSong = SineWaveSong()
+        
+        mySineWaveSong.filename = input("Enter a txt file to be read.\n")
+
+            
+        
+        mySineWaveSong.define_song_file()
+        
+        mySineWaveSong.play_song_file()
     
