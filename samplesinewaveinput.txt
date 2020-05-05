@@ -1,3 +1,0 @@
-LENGTH-10
-KEY-aminor
-BPM-80
