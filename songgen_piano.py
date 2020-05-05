@@ -1,8 +1,7 @@
-import winsound
 import random
 import time
 import wave
-import winreg
+from playsound import playsound #pip install playsound
 
 
 class PianoSong:
@@ -59,43 +58,43 @@ class PianoSong:
         self.file_songname = 'yoursong'
 
     def c5(self):
-        winsound.PlaySound("pianolowc", winsound.SND_ASYNC)
+        playsound("pianolowc.wav", False)
         return "pianolowc.wav"
     def c5sharp(self):
-        winsound.PlaySound("pianoc#", winsound.SND_ASYNC)
+        playsound("pianoc#.wav", False)
         return "pianoc#.wav"
     def d5(self):
-        winsound.PlaySound("pianod", winsound.SND_ASYNC)
+        playsound("pianod.wav", False)
         return "pianod.wav"
     def d5sharp(self):
-        winsound.PlaySound("pianod#", winsound.SND_ASYNC)
+        playsound("pianod#.wav", False)
         return "pianod#.wav"
     def e5(self):
-        winsound.PlaySound("pianoe", winsound.SND_ASYNC)
+        playsound("pianoe.wav", False)
         return "pianoe.wav"
     def f5(self):
-        winsound.PlaySound("pianof", winsound.SND_ASYNC)
+        playsound("pianof.wav", False)
         return "pianof.wav"
     def f5sharp(self):
-        winsound.PlaySound("pianof#", winsound.SND_ASYNC)
+        playsound("pianof#.wav", False)
         return "pianof#.wav"
     def g5(self):
-        winsound.PlaySound("pianog", winsound.SND_ASYNC)
+        playsound("pianog.wav", False)
         return "pianog.wav"
     def g5sharp(self):
-        winsound.PlaySound("pianog#", winsound.SND_ASYNC)
+        playsound("pianog#.wav", False)
         return "pianog#.wav"
     def a5(self):
-        winsound.PlaySound("pianoa", winsound.SND_ASYNC)
+        playsound("pianoa.wav", False)
         return "pianoa.wav"
     def a5sharp(self):
-        winsound.PlaySound("pianoa#", winsound.SND_ASYNC)
+        playsound("pianoa#.wav", False)
         return "pianoa#.wav"
     def b5(self):
-        winsound.PlaySound("pianob", winsound.SND_ASYNC)
+        playsound("pianob.wav", False)
         return "pianob.wav"
     def c6(self):
-        winsound.PlaySound("pianohighc", winsound.SND_ASYNC)
+        playsound("pianohighc.wav", False)
         return "pianohighc.wav"
 
 
@@ -139,13 +138,8 @@ class PianoSong:
             
             
     def compile_song_inputs(self):
-        
-
-        with winreg.OpenKey(winreg.HKEY_CURRENT_USER, r'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders') as key:
-            Downloads = winreg.QueryValueEx(key, '{374DE290-123F-4565-9164-39C4925E467B}')[0]
-        
         infiles = self.wavfiles
-        outfile = f"{Downloads}/{self.songname}.wav"
+        outfile = f"OutputSongs/{self.songname}.wav"
         
         wav_out = wave.open(outfile, 'wb')
         for wav_path in infiles:
@@ -181,20 +175,15 @@ class PianoSong:
     
     
     def compile_song_file(self):
-        
-
-        with winreg.OpenKey(winreg.HKEY_CURRENT_USER, r'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders') as key:
-            Downloads = winreg.QueryValueEx(key, '{374DE290-123F-4565-9164-39C4925E467B}')[0]
-        
         infiles = self.wavfiles
-        outfile = f"{Downloads}/{self.file_songname}.wav"
+        outfile = f"OutputSongs/{self.file_songname}.wav"
         
         wav_out = wave.open(outfile, 'wb')
         for wav_path in infiles:
             wav_in = wave.open(wav_path, 'rb')
             if not wav_out.getnframes():
                 wav_out.setparams(wav_in.getparams())
-            wav_out.writeframes(wav_in.readframes(wav_in.getnframes()))       
+            wav_out.writeframes(wav_in.readframes(wav_in.getnframes()))   
 
         
             
